@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class LoadingScreen : MonoBehaviour
 {
+    private float time;
+
     public GameObject hpUI;
     // 로딩 화면을 표시하는 Canvas 객체
     public GameObject loadingScreen;
@@ -15,13 +17,16 @@ public class LoadingScreen : MonoBehaviour
 
     private void Update()
     {
-        if(loadingScreen.activeSelf==false)
+        if (hpUI != null)
         {
-            hpUI.SetActive(true);
-        }
-        else
-        {
-            hpUI.SetActive(false);
+            if (loadingScreen.activeSelf == false)
+            {
+                hpUI.SetActive(true);
+            }
+            else
+            {
+                hpUI.SetActive(false);
+            }
         }
     }
 
@@ -39,7 +44,6 @@ public class LoadingScreen : MonoBehaviour
     IEnumerator LoadSceneAsync(string sceneName)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
         // 로딩바 초기화
         loadingBar.value = 0;
 
@@ -49,8 +53,10 @@ public class LoadingScreen : MonoBehaviour
             // 로딩바 업데이트
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
             loadingBar.value = progress;
-
+            /*if(asyncLoad.progress>0.6f)
+                yield return new WaitForSeconds(4f);*/
             yield return null;
+
         }
     }
 }
