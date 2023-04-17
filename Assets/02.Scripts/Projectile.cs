@@ -34,6 +34,13 @@ public class Projectile : MonoBehaviour
         {
             e.Fix();
         }
+
+        EnemyBoss boss = other.collider.GetComponent<EnemyBoss>();
+
+        if (boss)
+        {
+            boss.OnDamaged(1f, other.GetContact(0).point);
+        }
         
         Destroy(gameObject);
     }
