@@ -32,16 +32,12 @@ public class EnemyBoss : MonoBehaviour
 	public float maxHP;
 	float hp;
 
-	Player player;
-
 	public float chaseStartDistance;
 	public float chaseEndDistance;
 
 	IEnumerator Start()
 	{
 		rigidbody2d = GetComponent<Rigidbody2D>();
-
-		player = FindObjectOfType<Player>();
 
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
@@ -82,7 +78,7 @@ public class EnemyBoss : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+		float playerDistance = Vector3.Distance(transform.position, Player.Instance.transform.position);
 
 		switch (state)
         {
@@ -96,7 +92,7 @@ public class EnemyBoss : MonoBehaviour
 				break;
 			case State.Chase:
 				animator.SetTrigger("Walk");
-				direction = (player.transform.position - transform.position).normalized;
+				direction = (Player.Instance.transform.position - transform.position).normalized;
 
 				if (direction.x > 0)
                 {
