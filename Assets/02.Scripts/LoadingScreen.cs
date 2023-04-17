@@ -50,7 +50,6 @@ public class LoadingScreen : MonoBehaviour
             // 로딩바 업데이트
             float progress = Mathf.Clamp01(asyncLoad.progress / Time.deltaTime);
             loadingBar.value = progress;
-            Debug.Log(loadingBar.value);
             yield return new WaitForSeconds(0.5f);
             if (progress >= 1) asyncLoad.allowSceneActivation = true;
         }

@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     public AudioClip hitSound;
     public AudioClip shootingSound;
 
+    [HideInInspector] public bool isEnterPortal;
+    [HideInInspector] public int enterCount;
     public int health
     {
         get { return currentHealth; }
@@ -52,6 +54,7 @@ public class Player : MonoBehaviour
         
         audioSource = GetComponent<AudioSource>();
         currentMapName = SceneManager.GetActiveScene().name;
+        
 
     }
 
@@ -96,16 +99,21 @@ public class Player : MonoBehaviour
                 }  
             }
         }
- 
     }
 
     void FixedUpdate()
     {
         Vector2 position = rigidbody2d.position;
-        
+
         position = position + currentInput * speed * Time.deltaTime;
         
         rigidbody2d.MovePosition(position);
+
+        if (enterCount == 1)
+        {
+            transform.position = FindObjectOfType<Portal>().transform.position;
+        }
+
     }
 
     private void LateUpdate()
