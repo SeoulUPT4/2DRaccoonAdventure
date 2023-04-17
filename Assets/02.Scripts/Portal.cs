@@ -6,16 +6,11 @@ public class Portal : MonoBehaviour
 {
     public LoadingScreen loadingScreen;
     public string transferMapName;
-    private Player thePlayer;
+    //private Player thePlayer;
+
     // Start is called before the first frame update
     void Start()
     {
-        if (thePlayer == null)
-        {
-            thePlayer = FindObjectOfType<Player>();
-        }
-        Debug.Log(thePlayer);
-        Debug.Log(thePlayer.currentMapName);
 
     }
 
@@ -25,8 +20,8 @@ public class Portal : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             //Debug.Log("플레이어 충돌, 페이지 넘어감");
-            thePlayer.currentMapName = transferMapName;
-            Debug.Log(thePlayer.currentMapName);
+            Player.Instance.currentMapName = transferMapName;
+            Debug.Log(Player.Instance.currentMapName);
             loadingScreen.LoadScene(transferMapName);
             //SceneManager.LoadScene(transferMapName);
 

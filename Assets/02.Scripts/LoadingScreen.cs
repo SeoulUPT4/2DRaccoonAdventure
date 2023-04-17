@@ -38,8 +38,9 @@ public class LoadingScreen : MonoBehaviour
     // 씬을 비동기식으로 로드하는 함수
     IEnumerator LoadSceneAsync(string sceneName)
     {
+        yield return null;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
+        asyncLoad.allowSceneActivation = false;
         // 로딩바 초기화
         loadingBar.value = 0;
 
@@ -47,10 +48,11 @@ public class LoadingScreen : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             // 로딩바 업데이트
-            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+            float progress = Mathf.Clamp01(asyncLoad.progress / Time.deltaTime);
             loadingBar.value = progress;
-
-            yield return null;
+            Debug.Log(loadingBar.value);
+            yield return new WaitForSeconds(0.5f);
+            if (progress >= 1) asyncLoad.allowSceneActivation = true;
         }
     }
 }

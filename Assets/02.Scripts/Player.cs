@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
     public float speed = 4;
     public string currentMapName;
     public int maxHealth = 5;
@@ -34,11 +35,16 @@ public class Player : MonoBehaviour
     Vector2 lookDirection = new Vector2(1, 0);
     
     AudioSource audioSource;
-    
+    private void Awake()
+    {
+        if (Instance == null)Instance = this;
+        else Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
-                
         invincibleTimer = -1.0f;
         currentHealth = maxHealth;
         
@@ -100,6 +106,11 @@ public class Player : MonoBehaviour
         position = position + currentInput * speed * Time.deltaTime;
         
         rigidbody2d.MovePosition(position);
+    }
+
+    private void LateUpdate()
+    {
+        UIHealthBar.Instance.SetValue(currentHealth / (float)maxHealth);
     }
 
     public void ChangeHealth(int amount)
