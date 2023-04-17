@@ -1,93 +1,144 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBoss : MonoBehaviour
 {
+	public enum State
+    {
+		Idle,
+		Chase,
+		Die
+    }
+
+	public State state;
+
 	public float speed;
-	public float timeToChange;
-	public bool horizontal;
-
-	public GameObject smokeParticleEffect;
-	public ParticleSystem fixedParticleEffect;
-
 	public AudioClip hitSound;
-	public AudioClip fixedSound;
+	public Slider slider_hp;
+	public ParticleSystem PS_die;
+	public ParticleSystem PS_hit;
+    public SpriteRenderer image_exclamation;
+	public Canvas canvas_boss;
 
-	Rigidbody2D rigidbody2d;
-	float remainingTimeToChange;
+    Rigidbody2D rigidbody2d;
 	Vector2 direction = Vector2.right;
-	bool repaired = false;
+	Vector2 originPos;
 
 	Animator animator;
-
 	AudioSource audioSource;
 
-	void Start()
+	public float maxHP;
+	float hp;
+
+	Player player;
+
+	public float chaseStartDistance;
+	public float chaseEndDistance;
+
+	IEnumerator Start()
 	{
 		rigidbody2d = GetComponent<Rigidbody2D>();
-		remainingTimeToChange = timeToChange;
 
-		direction = horizontal ? Vector2.right : Vector2.down;
+		player = FindObjectOfType<Player>();
 
 		animator = GetComponent<Animator>();
-
 		audioSource = GetComponent<AudioSource>();
+
+		hp = maxHP;
+		slider_hp.maxValue = maxHP;
+		slider_hp.value = hp;
+
+		originPos = transform.position;
+
+		ChangeState(State.Chase);
+
+		canvas_boss.enabled = true;
+		yield return new WaitForSeconds(5f);
+		canvas_boss.enabled = false;
 	}
 
-	void Update()
-	{
-		if (repaired)
-			return;
-
-		remainingTimeToChange -= Time.deltaTime;
-
-		if (remainingTimeToChange <= 0)
-		{
-			remainingTimeToChange += timeToChange;
-			direction *= -1;
+	void ChangeState(State newState)
+    {
+		switch (newState)
+        {
+			case State.Idle:
+				image_exclamation.enabled = false;
+				break;
+			case State.Chase:
+				image_exclamation.enabled = true;
+				break;
+			case State.Die:
+				image_exclamation.enabled = false;
+				slider_hp.transform.parent.gameObject.SetActive(false);
+				Instantiate(PS_die, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+				Destroy(gameObject, 5f);
+				break;
 		}
 
-		animator.SetFloat("ForwardX", direction.x);
-		animator.SetFloat("ForwardY", direction.y);
-
-		//안좋은 방법이지만, 잔머리 사용. 꼭 플레이어가 죽인다 해서, 플레이어의 공격=>에너미일 필요는 없음
-		//특수 키를 누르면, 해당 스크립트를 가지고 있는 것들이 죽으면, 이론상 동일/유사한 기능을 가짐.
-		if (Input.GetKeyDown(KeyCode.K))
-		{
-			Destroy(gameObject);
-		}
-	}
+		state = newState;
+    }
 
 	void FixedUpdate()
 	{
-		rigidbody2d.MovePosition(rigidbody2d.position + direction * speed * Time.deltaTime);
+		float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+
+		switch (state)
+        {
+			case State.Idle:
+				animator.SetTrigger("Idle");
+
+				if (playerDistance < chaseStartDistance)
+                {
+					ChangeState(State.Chase);
+                }
+				break;
+			case State.Chase:
+				animator.SetTrigger("Walk");
+				direction = (player.transform.position - transform.position).normalized;
+
+				if (direction.x > 0)
+                {
+					transform.localEulerAngles = new Vector3(0, 0, 0);
+                } else
+                {
+					transform.localEulerAngles = new Vector3(0, 180, 0);
+				}
+
+				rigidbody2d.MovePosition(rigidbody2d.position + direction * speed * Time.deltaTime);
+				break;
+			case State.Die:
+				animator.SetTrigger("Die");
+				rigidbody2d.simulated = false;
+
+				break;
+        }
+
+		slider_hp.transform.rotation = Quaternion.identity;
 	}
+
+	public void OnDamaged(float damage, Vector2 pos)
+    {
+		hp -= damage;
+
+		if (hp <= 0)
+        {
+			ChangeState(State.Die);
+			hp = 0;
+        } else
+        {
+			Instantiate(PS_hit, pos, Quaternion.identity);
+		}
+
+		slider_hp.value = hp;
+    }
 
 	void OnCollisionStay2D(Collision2D other)
 	{
-		if (repaired)
-			return;
-
 		Player controller = other.collider.GetComponent<Player>();
 
 		if (controller != null)
 			controller.ChangeHealth(-1);
-	}
-
-	public void Fix()
-	{
-		animator.SetTrigger("Fixed");
-		repaired = true;
-
-		smokeParticleEffect.SetActive(false);
-
-		Instantiate(fixedParticleEffect, transform.position + Vector3.up * 0.5f, Quaternion.identity);
-
-		rigidbody2d.simulated = false;
-
-		audioSource.Stop();
-		audioSource.PlayOneShot(hitSound);
-		audioSource.PlayOneShot(fixedSound);
 	}
 }
