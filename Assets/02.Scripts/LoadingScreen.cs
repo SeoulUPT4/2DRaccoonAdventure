@@ -15,16 +15,13 @@ public class LoadingScreen : MonoBehaviour
 
     private void Update()
     {
-        if (hpUI != null)
+        if(loadingScreen.activeSelf==false)
         {
-            if (loadingScreen.activeSelf == false)
-            {
-                hpUI.SetActive(true);
-            }
-            else
-            {
-                hpUI.SetActive(false);
-            }
+            hpUI.SetActive(true);
+        }
+        else
+        {
+            hpUI.SetActive(false);
         }
     }
 
@@ -42,44 +39,19 @@ public class LoadingScreen : MonoBehaviour
     IEnumerator LoadSceneAsync(string sceneName)
     {
         yield return null;
-
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
-
-        float timer = 0.0f;
         // 로딩바 초기화
         loadingBar.value = 0;
 
         // 씬 로딩이 완료될 때까지 기다림
         while (!asyncLoad.isDone)
         {
-            yield return null;
-
-            timer += Time.deltaTime;
-
-            if(asyncLoad.progress<0.9f)
-            {
-                loadingBar.value = Mathf.Lerp(loadingBar.value, asyncLoad.progress, timer);
-                if (loadingBar.value>=asyncLoad.progress)
-                {
-                    timer = 0f;
-                }
-            }
-            else
-            {
-                loadingBar.value = Mathf.Lerp(loadingBar.value, 1f, timer);
-                if(loadingBar.value==1.0f)
-                {
-                    asyncLoad.allowSceneActivation = true;
-                    Debug.Log("Finish?");
-                    yield break;
-                }
-            }
-
             // 로딩바 업데이트
-/*            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+            float progress = Mathf.Clamp01(asyncLoad.progress / Time.deltaTime);
             loadingBar.value = progress;
-*/
+            yield return new WaitForSeconds(0.5f);
+            if (progress >= 1) asyncLoad.allowSceneActivation = true;
         }
     }
 }

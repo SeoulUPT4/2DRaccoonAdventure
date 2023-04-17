@@ -6,30 +6,26 @@ public class Portal : MonoBehaviour
 {
     public LoadingScreen loadingScreen;
     public string transferMapName;
-    private Player thePlayer;
+
     // Start is called before the first frame update
     void Start()
     {
-        if (thePlayer == null)
-        {
-            thePlayer = FindObjectOfType<Player>();
-        }
-        Debug.Log(thePlayer);
-        Debug.Log(thePlayer.currentMapName);
 
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("충돌 일어남");
         if (collision.CompareTag("Player"))
         {
-            //Debug.Log("플레이어 충돌, 페이지 넘어감");
-            thePlayer.currentMapName = transferMapName;
-            Debug.Log(thePlayer.currentMapName);
+            Player.Instance.enterCount += 1;
+            if (Player.Instance.enterCount == 2) return;
+            Player.Instance.currentMapName = transferMapName;
             loadingScreen.LoadScene(transferMapName);
-            //SceneManager.LoadScene(transferMapName);
-
+            
         }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Player.Instance.enterCount = 0;
     }
 }
