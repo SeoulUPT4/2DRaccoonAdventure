@@ -53,18 +53,18 @@ public class Enemy : MonoBehaviour
 
 		animator.SetFloat("ForwardX", direction.x);
 		animator.SetFloat("ForwardY", direction.y);
+
+		//안좋은 방법이지만, 잔머리 사용. 꼭 플레이어가 죽인다 해서, 플레이어의 공격=>에너미일 필요는 없음
+		//특수 키를 누르면, 해당 스크립트를 가지고 있는 것들이 죽으면, 이론상 동일/유사한 기능을 가짐.
+		if (Input.GetKeyDown(KeyCode.K))
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	void FixedUpdate()
 	{
 		rigidbody2d.MovePosition(rigidbody2d.position + direction * speed * Time.deltaTime);
-
-		//안좋은 방법이지만, 잔머리 사용. 꼭 플레이어가 죽인다 해서, 플레이어의 공격=>에너미일 필요는 없음
-		//특수 키를 누르면, 해당 스크립트를 가지고 있는 것들이 죽으면, 이론상 동일/유사한 기능을 가짐.
-		if (Input.GetKeyDown(KeyCode.K))
-        {
-			Destroy(gameObject);
-        }
 	}
 
 	void OnCollisionStay2D(Collision2D other)
