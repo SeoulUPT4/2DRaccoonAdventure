@@ -5,8 +5,18 @@ using UnityEngine;
 /// This class handle Enemy behaviour. It make them walk back & forth as long as they aren't fixed, and then just idle
 /// without being able to interact with the player anymore once fixed.
 /// </summary>
+
+public enum ENEMYTYPE
+{
+	Robot,
+	Robot3,
+	Boss
+}
+
 public class Enemy : MonoBehaviour
 {
+	public ENEMYTYPE enemyType;
+
 	public float speed;
 	public float timeToChange;
 	public bool horizontal;
@@ -16,17 +26,20 @@ public class Enemy : MonoBehaviour
 
 	public AudioClip hitSound;
 	public AudioClip fixedSound;
-	
+
 	Rigidbody2D rigidbody2d;
 	float remainingTimeToChange;
 	Vector2 direction = Vector2.right;
 	bool repaired = false;
-	
+
 	Animator animator;
-	
+
 	AudioSource audioSource;
+
 	
-	void Start ()
+    
+
+void Start ()
 	{
 		rigidbody2d = GetComponent<Rigidbody2D>();
 		remainingTimeToChange = timeToChange;
@@ -44,11 +57,32 @@ public class Enemy : MonoBehaviour
 			return;
 		
 		remainingTimeToChange -= Time.deltaTime;
+		int rand = UnityEngine.Random.Range(0, 4);
 
 		if (remainingTimeToChange <= 0)
 		{
 			remainingTimeToChange += timeToChange;
-			direction *= -1;
+
+			if (enemyType == ENEMYTYPE.Robot3)
+			{
+				switch (rand)
+				{
+					case 0:
+						direction = Vector2.right;
+						break;
+					case 1:
+						direction = Vector2.left;
+						break;
+					case 2:
+						direction = Vector2.up;
+						break;
+					case 3:
+						direction = Vector2.down;
+						break;
+				}
+			}
+			else
+				direction *= -1;
 		}
 
 		animator.SetFloat("ForwardX", direction.x);
@@ -60,6 +94,8 @@ public class Enemy : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+
+		
 	}
 
 	void FixedUpdate()
