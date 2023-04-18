@@ -33,13 +33,9 @@ public class Enemy : MonoBehaviour
 	bool repaired = false;
 
 	Animator animator;
-
 	AudioSource audioSource;
 
-	
-    
-
-void Start ()
+	void Start ()
 	{
 		rigidbody2d = GetComponent<Rigidbody2D>();
 		remainingTimeToChange = timeToChange;

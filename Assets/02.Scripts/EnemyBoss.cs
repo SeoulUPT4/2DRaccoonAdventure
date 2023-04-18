@@ -16,6 +16,7 @@ public class EnemyBoss : MonoBehaviour
 
 	public float speed;
 	public AudioClip hitSound;
+	public AudioClip dieSound;
 	public Slider slider_hp;
 	public ParticleSystem PS_die;
 	public ParticleSystem PS_hit;
@@ -126,6 +127,8 @@ public class EnemyBoss : MonoBehaviour
         {
 			Instantiate(PS_hit, pos, Quaternion.identity);
 		}
+
+		audioSource.PlayOneShot(hitSound);
 
 		slider_hp.value = hp;
     }
