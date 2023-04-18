@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
         
         audioSource = GetComponent<AudioSource>();
         currentMapName = SceneManager.GetActiveScene().name;
+        respawnPosition= GameObject.FindGameObjectWithTag("Respawn").transform;
         
 
     }
@@ -98,6 +99,10 @@ public class Player : MonoBehaviour
                     character.DisplayDialog();
                 }  
             }
+        }
+        if(respawnPosition==null)
+        {
+            respawnPosition = GameObject.FindGameObjectWithTag("Respawn").transform;
         }
     }
 

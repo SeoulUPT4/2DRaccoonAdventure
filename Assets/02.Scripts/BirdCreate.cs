@@ -16,7 +16,6 @@ public class BirdCreate : MonoBehaviour
         t += Time.deltaTime;
 
         int rand = UnityEngine.Random.Range(0,4);
-        Debug.Log(rand);
         float randT = UnityEngine.Random.Range(3.0f, 7.0f);
         if (t > randT)
         {

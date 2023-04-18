@@ -1190,12 +1190,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hey!
-
-    Help me fix all those broken robots!'
+  m_text: "\n  \uBC24\uC5D0\uB294 \uC5EC\uB7EC\uBAA8\uB85C \n  \n  \uC544\uCE68\uACFC\uB294
+    \uB2E4\uB974\uB2E8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7b98fb04d266f0a438fb02882b043122, type: 2}
+  m_sharedMaterial: {fileID: 5587194288591789853, guid: 7b98fb04d266f0a438fb02882b043122,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1219,8 +1219,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1993,7 +1993,7 @@ GameObject:
   - component: {fileID: 959868188}
   m_Layer: 0
   m_Name: RespawnPosition
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4156,7 +4156,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.3709184, y: 0.23361698}
+  m_Offset: {x: -0.23627728, y: 0.7650955}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -4167,7 +4167,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2141263, y: 0.70849794}
+  m_Size: {x: 1.4834086, y: 1.771455}
   m_EdgeRadius: 0
 --- !u!95 &1975116212
 Animator:
@@ -4201,6 +4201,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MaxValue
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855051478009920377, guid: 7331ba1035a8db645b5e6f7185b5b76f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855051478777973168, guid: 7331ba1035a8db645b5e6f7185b5b76f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1855051479115668588, guid: 7331ba1035a8db645b5e6f7185b5b76f,
         type: 3}

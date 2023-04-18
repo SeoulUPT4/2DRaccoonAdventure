@@ -2521,8 +2521,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " \n \uC548\uB155 \uB0B4\uC774\uB984\uC740 \uC218\uB2EC\uC774\uC57C\n\n
-    \uB098\uB97C \uB3C4\uC640 \uB85C\uBD07\uB4E4\uC744  \uACE0\uCCD0\uC8FC\uACA0\uB2C8?"
+  m_text: " \n \uC548\uB155 \uB0B4\uC774\uB984\uC740 \uC218\uB2EC\uC774\uC57C\n\n\uB098\uB97C
+    \uB3C4\uC640 \uB85C\uBD07\uB4E4\uC744  \uACE0\uCCD0\uC8FC\uACA0\uB2C8?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7b98fb04d266f0a438fb02882b043122, type: 2}
   m_sharedMaterial: {fileID: 5587194288591789853, guid: 7b98fb04d266f0a438fb02882b043122,
@@ -3137,7 +3137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &777360173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4214,7 +4214,7 @@ GameObject:
   - component: {fileID: 959868188}
   m_Layer: 0
   m_Name: RespawnPosition
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6629,6 +6629,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Raccoon
       objectReference: {fileID: 0}
+    - target: {fileID: 4763623884774657250, guid: d14d1d77b1d72e141b0abc0e5b702b3c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d14d1d77b1d72e141b0abc0e5b702b3c, type: 3}
 --- !u!1 &1694196533
@@ -7669,7 +7674,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.014052421, y: -0.060938835}
+  m_Offset: {x: -0.014052421, y: -0.4178846}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7680,7 +7685,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.77229196, y: 1.2976096}
+  m_Size: {x: 0.77229196, y: 2.011501}
   m_EdgeRadius: 0
 --- !u!95 &1975116212
 Animator:

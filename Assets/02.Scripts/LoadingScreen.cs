@@ -15,13 +15,16 @@ public class LoadingScreen : MonoBehaviour
 
     private void Update()
     {
-        if(loadingScreen.activeSelf==false)
+        if (hpUI != null)
         {
-            hpUI.SetActive(true);
-        }
-        else
-        {
-            hpUI.SetActive(false);
+            if (loadingScreen.activeSelf == false)
+            {
+                hpUI.SetActive(true);
+            }
+            else
+            {
+                hpUI.SetActive(false);
+            }
         }
     }
 
