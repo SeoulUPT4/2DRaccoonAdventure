@@ -6,9 +6,10 @@ public class Bird : MonoBehaviour
 {
     // Update is called once per frame
     float t = 0;
+    public float speed;
     void Update()
     {
-        transform.position = transform.position + transform.up * Time.deltaTime * 2.0f;
+        transform.position = transform.position + transform.up * Time.deltaTime * speed;
         t += Time.deltaTime;
         if (t > 20.0f)
             Destroy(gameObject);
